@@ -1,0 +1,273 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    background: #dfeff7;
+}
+
+
+
+
+.topbar{
+    background: #0b5fa5;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 50px;
+    font-size: 14px;
+}
+
+.top-info span{
+    margin-right: 20px;
+}
+
+.redes i{
+    margin-left: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.redes i:hover{
+    color: #d6ecff;
+}
+
+
+
+.header{
+    background: #c6e2f3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    border-bottom: 10px solid #0b5fa5;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+
+
+
+
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo img{
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.logo h2{
+    color: #0b4f82;
+    font-size: 28px;
+}
+
+.logo p{
+    color: #4d6d80;
+    font-size: 15px;
+}
+
+
+
+.menu a{
+    text-decoration: none;
+    margin-left: 25px;
+    color: #0b4f82;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.menu a:hover{
+    color: #d60000;
+}
+
+
+
+.banner{
+    background:
+    linear-gradient(rgba(11,95,165,0.7),
+    rgba(11,95,165,0.7)),
+    url("colegio.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    height: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay{
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.overlay h1{
+    font-size: 55px;
+    margin-bottom: 20px;
+}
+
+.overlay p{
+    font-size: 24px;
+}
+
+
+
+.quienes{
+    padding: 80px 50px;
+    text-align: center;
+    background: #eef7fc;
+}
+
+.quienes h2{
+    color: #0b4f82;
+    margin-bottom: 40px;
+    font-size: 40px;
+}
+
+
+
+.carrusel{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.carrusel img{
+    width: 320px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.carrusel img:hover{
+    transform: scale(1.03);
+}
+
+
+
+.cards{
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card{
+    background: white;
+    width: 320px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+    border-top: 8px solid #0b5fa5;
+    transition: 0.3s;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+}
+
+.card h3{
+    color: #0b4f82;
+    margin-bottom: 15px;
+    font-size: 26px;
+}
+
+.card p{
+    color: #444;
+    line-height: 1.6;
+}
+
+
+
+
+.footer{
+    background: #0b5fa5;
+    color: white;
+    padding: 50px;
+    margin-top: 50px;
+}
+
+.footer-contenido{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer h3{
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.footer p{
+    line-height: 1.6;
+}
+
+.footer-redes i{
+    margin-right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.footer-redes i:hover{
+    color: #d6ecff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 900px){
+
+    .header{
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .menu{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .menu a{
+        margin-left: 0;
+    }
+
+    .topbar{
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .overlay h1{
+        font-size: 38px;
+    }
+
+    .overlay p{
+        font-size: 18px;
+    }
+
+}
