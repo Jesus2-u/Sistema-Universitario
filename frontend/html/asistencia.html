@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Asistencia</title>
+
+    <link rel="stylesheet" href="/frontend/css/asistencia.css">
+</head>
+
+<body>
+<header class="header">
+
+    <div class="header-contenido">
+
+        <div class="logo">
+            <img src="/Imagenes/logo.jpg" alt="Logo">
+        </div>
+
+        <div class="titulo">
+            <h1>SISTEMA DE CONTROL DE ASISTENCIA</h1>
+        </div>
+
+    </div>
+
+</header>
+
+    <main class="contenedor">
+
+        <section class="seccion">
+
+            <h2>DATOS DEL ALUMNO</h2>
+
+            <div class="fila">
+
+                <div class="grupo">
+                    <label>Código</label>
+                    <input type="text">
+                </div>
+
+                <div class="grupo">
+                    <label>Nombres</label>
+                    <input type="text">
+                </div>
+
+                <div class="grupo">
+                    <label>Apellidos</label>
+                    <input type="text">
+                </div>
+
+            </div>
+
+            <div class="fila">
+
+                <div class="grupo">
+                    <label>Curso</label>
+                    <select>
+                        <option>Seleccione</option>
+                        <option>Programación</option>
+                        <option>Diseño Web</option>
+                        <option>Base de Datos</option>
+                    </select>
+                </div>
+
+                <div class="grupo">
+                    <label>Sección</label>
+                    <select>
+                        <option>Seleccione</option>
+                        <option>A</option>
+                        <option>B</option>
+                    </select>
+                </div>
+
+                <div class="grupo">
+                    <label>Fecha</label>
+                    <input type="date">
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- REGISTRO -->
+        <section class="seccion">
+
+            <h2>REGISTRO DE ASISTENCIA</h2>
+
+            <div class="fila">
+
+                <div class="grupo">
+                    <label>Estado</label>
+                    <select>
+                        <option>Seleccione</option>
+                        <option>Presente</option>
+                        <option>Tardanza</option>
+                        <option>Falta</option>
+                    </select>
+                </div>
+
+                <div class="grupo">
+                    <label>Hora de Entrada</label>
+                    <input type="time">
+                </div>
+
+                <div class="grupo">
+                    <label>Observaciones</label>
+                    <input type="text">
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+
+
+
+</section>
+
+        <div class="botones">
+
+            <button class="btn guardar">
+                Guardar
+            </button>
+
+            <button class="btn limpiar">
+                Limpiar
+            </button>
+
+        </div>
+
+    </main>
+
+
+
+<section class="tabla-contenedor">
+
+    <h2>LISTA DE ASISTENCIA</h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Código</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Curso</th>
+                <th>Estado</th>
+                <th>Hora</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+           
+        </tbody>
+
+    </table>
+
+
+
+
+
+<footer class="footer">
+
+    <p>
+        Sistema de Asistencia Escolar
+    </p>
+
+</footer>
+
+</body>
+</html>
