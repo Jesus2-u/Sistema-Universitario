@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Sistema de Asistencia | Isabel Flores de Oliva</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/frontend/css/asistencia.css">
+</head>
+<body>
+
+<header class="header-modern">
+    <div class="header-contenido-modern">
+        <div class="logo-modern">
+            <img src="https://placehold.co/200x200/7C3AED/white?text=IFO" alt="Logo">
+            <div>
+                <h2>Isabel Flores de Oliva</h2>
+                <p>Excelencia académica</p>
+            </div>
+        </div>
+        <div class="titulo-modern">
+            <h1><i class="fa-solid fa-clipboard-list"></i> Sistema de Control de Asistencia</h1>
+        </div>
+        <div>
+            <a href="index.html" style="color: white; text-decoration: none; background: rgba(255,255,255,0.1); padding: 8px 18px; border-radius: 40px; font-size: 14px;">
+                <i class="fa-solid fa-arrow-left"></i> Volver al inicio
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="contenedor-modern">
+    <div id="alertContainer"></div>
+    
+    <!-- DATOS DEL ALUMNO -->
+    <section class="seccion-modern">
+        <h2><i class="fa-solid fa-user-graduate"></i> Datos del Alumno</h2>
+        <div class="fila-modern">
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-qrcode"></i> Código</label>
+                <input type="text" id="codigo" placeholder="Ej: A001">
+            </div>
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-user"></i> Nombres</label>
+                <input type="text" id="nombres" placeholder="Nombres completos">
+            </div>
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-user"></i> Apellidos</label>
+                <input type="text" id="apellidos" placeholder="Apellidos completos">
+            </div>
+        </div>
+        <div class="fila-modern">
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-book"></i> Curso</label>
+                <select id="curso">
+                    <option value="">Seleccione curso</option>
+                    <option>Programación</option>
+                    <option>Diseño Web</option>
+                    <option>Base de Datos</option>
+                    <option>Matemática</option>
+                    <option>Comunicación</option>
+                </select>
+            </div>
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-layer-group"></i> Sección</label>
+                <select id="seccion">
+                    <option value="">Seleccione sección</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                </select>
+            </div>
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-calendar"></i> Fecha</label>
+                <input type="date" id="fecha">
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTRO DE ASISTENCIA -->
+    <section class="seccion-modern">
+        <h2><i class="fa-solid fa-check-circle"></i> Registro de Asistencia</h2>
+        <div class="fila-modern">
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-flag-checkered"></i> Estado</label>
+                <select id="estado">
+                    <option value="">Seleccione estado</option>
+                    <option value="Presente">Presente</option>
+                    <option value="Tardanza">Tardanza</option>
+                    <option value="Falta">Falta</option>
+                </select>
+            </div>
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-clock"></i> Hora de Entrada</label>
+                <input type="time" id="hora">
+            </div>
+            <div class="grupo-modern">
+                <label><i class="fa-solid fa-pen"></i> Observaciones</label>
+                <input type="text" id="observaciones" placeholder="Observaciones (opcional)">
+            </div>
+        </div>
+        <div class="botones-modern">
+            <button class="btn-modern btn-guardar-modern" id="guardarBtn">
+                <i class="fa-solid fa-save"></i> Guardar Asistencia
+            </button>
+            <button class="btn-modern btn-limpiar-modern" id="limpiarBtn">
+                <i class="fa-solid fa-eraser"></i> Limpiar Formulario
+            </button>
+        </div>
+    </section>
+
+    <!-- TABLA DE ASISTENCIA -->
+    <div class="tabla-contenedor-modern">
+        <h2><i class="fa-solid fa-table-list"></i> Lista de Asistencia</h2>
+        <table class="tabla-modern">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Curso</th>
+                    <th>Estado</th>
+                    <th>Hora</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaBody">
+                <tr class="empty-row">
+                    <td colspan="8">📋 No hay registros de asistencia. Complete el formulario para agregar.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="footer-modern">
+    <p><i class="fa-regular fa-copyright"></i> 2025 Colegio Isabel Flores de Oliva - Sistema de Asistencia Escolar | Versión 2.0</p>
+</footer>
+
+<script>
+    // Cargar registros desde localStorage
+    let asistencias = [];
+    
+    function loadFromStorage() {
+        const stored = localStorage.getItem('asistencias_ie');
+        if(stored) {
+            asistencias = JSON.parse(stored);
+        } else {
+            // Datos de ejemplo para mostrar funcionalidad
+            asistencias = [
+                {
+                    id: Date.now() + 1,
+                    codigo: 'A001',
+                    nombres: 'María',
+                    apellidos: 'González Pérez',
+                    curso: 'Programación',
+                    seccion: 'A',
+                    estado: 'Presente',
+                    hora: '08:15',
+                    fecha: '2025-05-15',
+                    observaciones: 'Llegó puntual'
+                },
+                {
+                    id: Date.now() + 2,
+                    codigo: 'A002',
+                    nombres: 'Jorge',
+                    apellidos: 'Ramírez López',
+                    curso: 'Diseño Web',
+                    seccion: 'B',
+                    estado: 'Tardanza',
+                    hora: '08:45',
+                    fecha: '2025-05-15',
+                    observaciones: 'Tráfico'
+                }
+            ];
+            saveToStorage();
+        }
+        renderTable();
+    }
+    
+    function saveToStorage() {
+        localStorage.setItem('asistencias_ie', JSON.stringify(asistencias));
+    }
+    
+    function showAlert(message, type = 'success') {
+        const container = document.getElementById('alertContainer');
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert-modern alert-${type}-modern`;
+        alertDiv.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i> ${message}`;
+        container.appendChild(alertDiv);
+        
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 3000);
+    }
+    
+    function limpiarFormulario() {
+        document.getElementById('codigo').value = '';
+        document.getElementById('nombres').value = '';
+        document.getElementById('apellidos').value = '';
+        document.getElementById('curso').value = '';
+        document.getElementById('seccion').value = '';
+        document.getElementById('fecha').value = '';
+        document.getElementById('estado').value = '';
+        document.getElementById('hora').value = '';
+        document.getElementById('observaciones').value = '';
+    }
+    
+    function getFormData() {
+        return {
+            id: Date.now(),
+            codigo: document.getElementById('codigo').value.trim(),
+            nombres: document.getElementById('nombres').value.trim(),
+            apellidos: document.getElementById('apellidos').value.trim(),
+            curso: document.getElementById('curso').value,
+            seccion: document.getElementById('seccion').value,
+            fecha: document.getElementById('fecha').value,
+            estado: document.getElementById('estado').value,
+            hora: document.getElementById('hora').value,
+            observaciones: document.getElementById('observaciones').value.trim() || '--'
+        };
+    }
+    
+    function validarFormulario(data) {
+        if(!data.codigo) return 'El código es obligatorio';
+        if(!data.nombres) return 'Los nombres son obligatorios';
+        if(!data.apellidos) return 'Los apellidos son obligatorios';
+        if(!data.curso) return 'Seleccione un curso';
+        if(!data.seccion) return 'Seleccione una sección';
+        if(!data.fecha) return 'Seleccione una fecha';
+        if(!data.estado) return 'Seleccione un estado';
+        if(!data.hora) return 'Ingrese la hora de entrada';
+        return null;
+    }
+    
+    function guardarAsistencia() {
+        const data = getFormData();
+        const error = validarFormulario(data);
+        
+        if(error) {
+            showAlert(error, 'error');
+            return;
+        }
+        
+        // Verificar si ya existe asistencia para ese alumno en la misma fecha
+        const existe = asistencias.some(a => a.codigo === data.codigo && a.fecha === data.fecha);
+        if(existe) {
+            showAlert(`⚠️ Ya existe un registro de asistencia para el código ${data.codigo} en la fecha ${data.fecha}`, 'error');
+            return;
+        }
+        
+        asistencias.push(data);
+        saveToStorage();
+        renderTable();
+        limpiarFormulario();
+        showAlert('✅ Asistencia registrada correctamente', 'success');
+    }
+    
+    function eliminarRegistro(id) {
+        if(confirm('¿Estás seguro de eliminar este registro de asistencia?')) {
+            asistencias = asistencias.filter(a => a.id !== id);
+            saveToStorage();
+            renderTable();
+            showAlert('🗑️ Registro eliminado', 'success');
+        }
+    }
+    
+    function editarRegistro(id) {
+        const registro = asistencias.find(a => a.id === id);
+        if(registro) {
+            document.getElementById('codigo').value = registro.codigo;
+            document.getElementById('nombres').value = registro.nombres;
+            document.getElementById('apellidos').value = registro.apellidos;
+            document.getElementById('curso').value = registro.curso;
+            document.getElementById('seccion').value = registro.seccion;
+            document.getElementById('fecha').value = registro.fecha;
+            document.getElementById('estado').value = registro.estado;
+            document.getElementById('hora').value = registro.hora;
+            document.getElementById('observaciones').value = registro.observaciones !== '--' ? registro.observaciones : '';
+            
+            // Eliminar el viejo para reemplazar al guardar
+            asistencias = asistencias.filter(a => a.id !== id);
+            saveToStorage();
+            renderTable();
+            showAlert('✏️ Modifica los datos y presiona Guardar', 'success');
+            
+            // Hacer scroll al formulario
+            document.querySelector('.seccion-modern').scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    
+    function getBadgeEstado(estado) {
+        switch(estado) {
+            case 'Presente': return '<span class="badge-estado badge-presente"><i class="fa-solid fa-check"></i> Presente</span>';
+            case 'Tardanza': return '<span class="badge-estado badge-tardanza"><i class="fa-solid fa-clock"></i> Tardanza</span>';
+            case 'Falta': return '<span class="badge-estado badge-falta"><i class="fa-solid fa-xmark"></i> Falta</span>';
+            default: return estado;
+        }
+    }
+    
+    function renderTable() {
+        const tbody = document.getElementById('tablaBody');
+        
+        if(asistencias.length === 0) {
+            tbody.innerHTML = '<tr class="empty-row"><td colspan="8">📋 No hay registros de asistencia. Complete el formulario para agregar.</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = asistencias.map(reg => `
+            <tr>
+                <td><strong>${escapeHtml(reg.codigo)}</strong></td>
+                <td>${escapeHtml(reg.nombres)}</td>
+                <td>${escapeHtml(reg.apellidos)}</td>
+                <td>${escapeHtml(reg.curso)} - ${escapeHtml(reg.seccion)}</td>
+                <td>${getBadgeEstado(reg.estado)}</td>
+                <td><i class="fa-regular fa-clock"></i> ${reg.hora}</td>
+                <td><i class="fa-regular fa-calendar"></i> ${reg.fecha}</td>
+                <td>
+                    <button class="accion-btn btn-editar" onclick="editarRegistro(${reg.id})">
+                        <i class="fa-solid fa-pen"></i> Editar
+                    </button>
+                    <button class="accion-btn btn-eliminar" onclick="eliminarRegistro(${reg.id})">
+                        <i class="fa-solid fa-trash"></i> Eliminar
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+    
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // Establecer fecha actual por defecto
+    function setDefaultDate() {
+        const today = new Date().toISOString().split('T')[0];
+        if(!document.getElementById('fecha').value) {
+            document.getElementById('fecha').value = today;
+        }
+    }
+    
+    // Event Listeners
+    document.getElementById('guardarBtn').addEventListener('click', guardarAsistencia);
+    document.getElementById('limpiarBtn').addEventListener('click', limpiarFormulario);
+    
+    // Inicializar
+    loadFromStorage();
+    setDefaultDate();
+    
+    // Efecto de entrada suave
+    document.querySelectorAll('.seccion-modern, .tabla-contenedor-modern').forEach((el, idx) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            el.style.transition = 'all 0.5s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, idx * 100);
+    });
+</script>
+</body>
+</html>
